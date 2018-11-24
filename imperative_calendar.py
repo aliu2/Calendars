@@ -32,7 +32,7 @@ def print_day(day, day_name):
 
 
 def remove_appointment(appointment_name, week):
-	for day in week:
+	for day in week.values():
 		for curr_appointment in day:
 			if appointment_name in curr_appointment:
 				day.remove(curr_appointment)
@@ -43,7 +43,7 @@ def remove_appointment(appointment_name, week):
 
 def main():
 	week = {
-		"monday": [['walk dog', '13:00', '12:00']],
+		"monday": [],
 		"tuesday": [],
 		"wednesday": [],
 		"thursday": [],

@@ -11,6 +11,18 @@ def add_appointment(appointment_name, start_day, start_time, end_day, end_time, 
 		week[end_day.lower()].append(end_day_entry)
 
 
+
+#removing an appointment from the week
+def remove_appointment(appointment_name, week):
+	for day in week.values():
+		for curr_appointment in day:
+			if appointment_name in curr_appointment:
+				day.remove(curr_appointment)
+	print("Appointment removed")
+	return week
+
+
+
 #printing the appointments for a specific day
 def print_day(day, day_name):
 	if len(day) == 0:
@@ -31,13 +43,13 @@ def print_day(day, day_name):
 	return s
 
 
-def remove_appointment(appointment_name, week):
-	for day in week.values():
-		for curr_appointment in day:
-			if appointment_name in curr_appointment:
-				day.remove(curr_appointment)
-	print("Appointment removed")
-	return week
+
+#printing all appointments for the week
+def print_week(week):
+	print("Your appointments for the week are:\n")
+	for day in week:
+		if len(week[day]) > 0:
+			print(print_day(week[day], day))
 
 
 
@@ -82,7 +94,7 @@ def main():
 
 		elif command == "print week":
 			#print the week
-			pass
+			print_week(week)
 		else:
 			print("Please enter a valid command")
 

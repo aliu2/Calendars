@@ -64,7 +64,7 @@ def main():
 		"sunday": []
 	}
 
-	print("\033[H\033[J")
+
 	command = input("What do you wish to do?\n")
 
 	while command != "end":
@@ -77,9 +77,7 @@ def main():
 			end_day = input("Please enter the end day of your appointment\n")
 			end_time = input("Please enter the end time of your appointment (HH:MM)\n")
 			add_appointment(appointment_name, start_day, start_time, end_day, end_time, week)
-			print("\033[H\033[J")
 			print("Appointment added!")
-			print(week)
 
 
 		elif command == "remove":

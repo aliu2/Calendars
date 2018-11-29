@@ -56,8 +56,10 @@ class AppointmentList(object):
 
 	#removes appointment from appointment list
 	def remove_appointment(self, appointment_name):
-		if self.length == 1:
+		if self.length == 1 and self.head.get_name() == appointment_name:
 			self.head = None
+		elif self.length == 2:
+			pass
 		else:
 			curr_appointment = self.head
 			prev_appointment = self.head
@@ -107,6 +109,10 @@ class AppointmentList(object):
 def main():
 	calendar = AppointmentList()
 	command = input("What do you wish to do?\n")
+	calendar.add_appointment(Appointment("walk dog", "monday", "13:00", "tuesday", "16:00"))
+	calendar.add_appointment(Appointment("do assignments", "monday", "13:00", "tuesday", "16:00"))
+	calendar.add_appointment(Appointment("groceries", "monday", "13:00", "tuesday", "16:00"))
+	calendar.add_appointment(Appointment("whatever", "monday", "13:00", "tuesday", "16:00"))
 
 	while command != "end":
 

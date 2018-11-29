@@ -12,6 +12,9 @@ class Appointment(object):
 	def get_day(self):
 		return self.start_day
 
+	def get_name(self):
+		return self.name
+
 	def get_pointer(self):
 		return self.pointer
 
@@ -32,24 +35,39 @@ class Appointment(object):
 class AppointmentList(object):
 	def __init__(self):
 		self.head = None
+		self.length = 0
 
 
 	def get_head(self):
 		return self.head
 
-	#check if calendar is empty or not
-	def is_empty(self):
-		return self.head == None
-
 
 	#add an appointment to the week
 	def add_appointment(self, appointment):
 		#if appointment is empty then just 
-		if self.is_empty():
+		if self.length == 0:
 			self.head = appointment
 		else:
 			appointment.set_pointer(self.head)
 			self.head = appointment
+		self.length += 1
+		print("Appoinment added!")
+
+
+	#removes appointment from appointment list
+	def remove_appointment(self, appointment_name):
+		if self.length == 1:
+			self.head = None
+		else:
+			curr_appointment = self.head
+			prev_appointment = self.head
+			while curr_appointment != None:
+				if curr_appointment.get_name() == appointment_name:
+					prev_appointment.set_pointer(curr_appointment.get_pointer())
+				prev_appointment = curr_appointment
+				curr_appointment = curr_appointment.get_pointer()
+		#self.length -= 1
+		print("Appointment removed!")
 
 
 	#check if a day has an appointment
@@ -76,22 +94,55 @@ class AppointmentList(object):
 
 	#print all appointments for the week
 	def print_week(self):
-		week = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",]
-		for day in week:
-			if self.has_appointment(day):
-				self.print_day(day)
+		if self.length > 0:
+			week = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",]
+			for day in week:
+				if self.has_appointment(day):
+					self.print_day(day)
+		else:
+			print("You have no appointments scheduled for the week")
 
 
 
 def main():
-	appointment1 = Appointment("walk dog", "monday", "14:00", "monday", "15:00")
-	appointment2 = Appointment("get groceries", "monday", "16:00", "monday", "19:00")
-	appointment3 = Appointment("do assignments", "tuesday", "15:00", "wednesday", "16:00")
 	calendar = AppointmentList()
-	calendar.add_appointment(appointment1)
-	calendar.add_appointment(appointment2)
-	calendar.add_appointment(appointment3)
-	calendar.print_day("monday")
+	command = input("What do you wish to do?\n")
+
+	while command != "end":
+
+		#reads user input and adds an appointment
+		if command == "add":
+			name = input("Please enter a name for the appointment: ")
+			times = input("Please enter a start a start day, a start time, an end day and an end time:\n")
+			times = times.split()
+			appointment = Appointment(name, times[0], times[1], times[2], times[3])
+			calendar.add_appointment(appointment)
+
+			
+		#read user input and remove the task
+		elif command == "remove":
+			appointment_name = input("What is the name of the appointment you would like to remove?\n\n")
+			calendar.remove_appointment(appointment_name)
+
+
+		#read day and print the day
+		elif command == "print day":
+			day = input("Which day's appointments would you like to see?\n\n")
+			print("\n============================\n")
+			calendar.print_day(day)
+			print("\n============================\n")
+
+
+		#print the week
+		elif command == "print week":
+			print("\n============================\n")
+			calendar.print_week()
+			print("\n============================\n")
+
+		else:
+			print("Please enter a valid command")
+
+		command = input("What do you wish to do?\n")
 
 if __name__ == '__main__':
 	main()
